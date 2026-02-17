@@ -1,0 +1,122 @@
+/* =========================================================
+   BASE
+   ========================================================= */
+
+/* Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base */
+html,
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-dark);
+  background-color: var(--color-dark);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body {
+  animation: fadeInPage 0.7s ease-in;
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Themes */
+.white { background: var(--color-white); color: var(--color-text-dark); }
+.gray  { background: var(--color-gray); }
+.tan   { background: var(--color-tan); }
+.dark {
+  /* Surface */
+  background-color: var(--color-dark);
+  color: var(--color-text-light);
+
+  /* Link tokens */
+  --link-default: var(--color-text-light);
+  --link-hover: var(--color-accent);
+  --link-visited: var(--color-text-light);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+p,
+a,
+li {
+  font-family: var(--font-body);
+  font-weight: 100;
+}
+
+h1 { font-size: clamp(2.625rem, 1.8rem + 3.5vw, 6rem); letter-spacing: -4px; display: block;}
+h2 { font-size: clamp(2rem, 1.6rem + 1.8vw, 3.75rem); letter-spacing: -4px; }
+h3 {
+  font-size: clamp(1rem, 0.5rem + 2vw, 2rem);
+  letter-spacing: 0px;
+  text-transform: uppercase;
+}
+h4 { font-size: clamp(1.5rem, 1.35rem + 0.65vw, 1.8rem); }
+h5 { font-size: clamp(1.125rem, 1.03rem + 0.4vw, 1.5rem); }
+h6 { font-size: clamp(0.875rem, 0.81rem + 0.26vw, 1.125rem); }
+
+
+
+p {
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+  line-height: 1.6;
+}
+
+p.small {
+  font-size: 0.9rem;
+  margin-bottom: 40px;
+}
+
+/* Links */
+a {
+  color: var(--link-default);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:active {
+  color: var(--link-active);
+}
+
+a.current {
+  color: var(--link-current-color);
+  background-color: var(--link-current-bg);
+  border-radius: var(--radius-pill);
+}
+
+/* Lists */
+ul {
+  list-style: none;
+}
+
+/* Media */
+img,
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-md);
+}

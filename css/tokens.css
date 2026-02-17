@@ -1,0 +1,36 @@
+/* =========================================================
+   TOKENS
+   ========================================================= */
+
+:root {
+  /* Typography */
+  --font-heading: "GT Walsheim Pro", sans-serif;
+  --font-body: "GT Walsheim Pro", sans-serif;
+
+  /* Colors */
+  --color-dark: #131313;
+  --color-white: #ffffff;
+  --color-gray: #faf9f7;
+  --color-tan: #e1e0dc;
+  --color-dark-gray: #2c2c2c;
+
+  --color-text-dark: #0a0a0a;
+  --color-text-light: #ffffff;
+  --color-accent: #d0ae8c;
+
+
+  /* Link colors */
+  --link-default: var(--color-text-dark);
+  --link-hover: var(--color-accent);
+  --link-active: var(--color-accent);
+  --link-visited: var(--color-accent);
+
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-pill: 100px;
+
+  /* Motion */
+  --transition-base: 0.3s ease;
+}
