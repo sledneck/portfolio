@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="description" content="Chris Sanders | Design Director, Interface Designer, UI/UX, System Design">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="fonts/fonts.css" />
+<link rel="stylesheet" href="css/resume.css" />
+<link rel="stylesheet" href="css/global.css" />
+<title>Chris Sanders | Design Director, Interface Designer, UI/UX, System Design</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
+  
+  .sticky-nav-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .sticky-nav-wrapper {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+</style>
+</head>
+<body class="dark">
+<div id="nav-root"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1"
+  }
+}
+</script>
+
+<script type="module">
+  import React, { useState, useEffect, useRef } from 'react';
+  import ReactDOM from 'react-dom/client';
+  import { motion } from 'framer-motion';
+
+  const { createElement: h } = React;
+
+  function Navigation() {
+    const navItems = [
+      { name: 'work', link: 'https://www.chrissanders.me/' },
+      { name: 'about', link: null }
+    ];
+
+    const [activeNav, setActiveNav] = useState("about");
+    const [hoveredNav, setHoveredNav] = useState(null);
+    const [isNavSticky, setIsNavSticky] = useState(false);
+    const navRef = useRef(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsNavSticky(!entry.isIntersecting);
+        },
+        { threshold: 1 }
+      );
+
+      if (navRef.current) {
+        observer.observe(navRef.current);
+      }
+
+      return () => {
+        if (navRef.current) {
+          observer.unobserve(navRef.current);
+        }
+      };
+    }, []);
+
+    const handleNavClick = (navItem) => {
+      if (navItem.link) {
+        window.location.href = navItem.link;
+      } else {
+        setActiveNav(navItem.name);
+      }
+    };
+
+    return h('div', {
+      ref: navRef,
+      className: "sticky-nav-wrapper"
+    },
+      h('nav', {
+        className: `px-2 md:px-4 py-2 md:py-4 rounded-xl md:rounded-2xl bg-[#eae9e9e6] backdrop-blur-lg transition-shadow duration-300 ${isNavSticky ? 'shadow-2xl' : ''}`
+      },
+        h('div', { className: "flex items-center gap-0.5 md:gap-1" },
+          navItems.map(navItem =>
+            h('button', {
+              key: navItem.name,
+              onClick: () => handleNavClick(navItem),
+              onMouseEnter: () => setHoveredNav(navItem.name),
+              onMouseLeave: () => setHoveredNav(null),
+              className: "px-4 md:px-8 py-2 md:py-3 rounded-xl uppercase text-xs md:text-base transition-colors relative"
+            },
+              (hoveredNav === navItem.name || activeNav === navItem.name) && h(motion.div, {
+                layoutId: "navBackground",
+                className: "absolute inset-0 bg-black rounded-xl",
+                transition: { type: "spring", stiffness: 400, damping: 30 }
+              }),
+              h('span', {
+                className: `relative z-10 ${activeNav === navItem.name || hoveredNav === navItem.name ? "text-white" : "text-black"} transition-colors`
+              }, navItem.name.charAt(0).toUpperCase() + navItem.name.slice(1))
+            )
+          )
+        )
+      )
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('nav-root'));
+  root.render(h(Navigation));
+</script>
+
+<div class="container">
+  <main class="resume">
+      <div class="resume-intro">
+        <h1>Be a designer and solve the problem.</h1>
+            <h4>I believe that humor, honesty, and hard conversations are the key to creating wonderful design solutions. I bring with me a deep expertise of product and experience design crafted for millions. Currently the UX Design Lead for PayPal.</h4>
+      </div>
+      <div><img src="assets/chris.webp"/></div>
+  </main>
+  <main class="resume-cv">
+    <div class="row-sections">
+      <p class="small">01</p>
+      <h2>High Craft at Scale</h2>
+      <p>I am a high craft designer that enjoys working a maximum scale. I'm passionate about unification, and creating designs that are flexible. One of my biggest strengths is redesigning products that have reached product market fit, but have hit an optimization ceiling and need to modernize, I aim to design products and product systems that are Cross-app, cross-OS, cross-device, cross-platform, and cross-dimension (2D / 3D).</p>
+    </div>
+  </main>
+  <main class="resume-cv">
+    <div class="row-sections">
+      <p class="small">02</p>
+      <h2>Vision Work</h2>
+      <p>I'm passionate about vision work and bleeding edge technologies, such as mixed reality and machine learning. I enjoy using innovation frameworks for concept development. I'm comfortable starting with a blank page, and making sense of emerging domains.</p>
+    </div>
+  </main>
+  <main class="resume-cv">
+    <div class="row-sections">
+      <p class="small">03</p>
+      <h2>Good People</h2>
+      <p>I love working with good people, who put the integrity of the product before themselves. I enjoy helping to create a positive and supportive work environment for myself and others.</p>
+    </div>
+  </main>
+  <main class="resume-cv">
+    <div class="row-sections">
+      <p class="small">04</p>
+      <h2>Efficiency</h2>
+      <p>I like building tools and operations to make everyone's job easier. I like it simplifying complex design problems at scale, to create efficiency so that each individual can take on more scope with less hours of work.</p>
+    </div>
+  </main>
+    <footer>
+        <h1>Let's Connect</h1>
+        <div class="footer">
+          <div class="footer-title"><a href="mailto: chris@chrissandersdesign.com">Email</a></div>
+          <div class="footer-title"><a href="https://www.linkedin.com/in/chrisksanders/">LinkedIn</a></div>
+          <div class="footer-title"><a href="https://dribbble.com/chrissanders">Dribble</a></div>
+          <div class="copyright">Chris Sanders © 2024</div>
+       </div>
+  </footer>
+</div>
+</body>
+</html>

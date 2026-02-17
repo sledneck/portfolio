@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chris Sanders - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .hero-title {
+            font-family: 'Anton', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+    <div id="root"></div>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "framer-motion": "https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1"
+      }
+    }
+    </script>
+
+    <script type="module">
+        import React, { useState, useEffect, useRef } from 'react';
+        import ReactDOM from 'react-dom/client';
+        import { motion } from 'framer-motion';
+
+        const { createElement: h } = React;
+
+        function PortfolioPage() {
+          const projects = [
+            {
+              image: "assets/paypal-thumbnail.webp",
+              title: "PayPal",
+              subtitle: "Merchant Platform",
+              tags: ["Experience Strategy", "UX Design", "Ecommerce"],
+              link: "https://www.chrissanders.me/paypal.html"
+            },
+            {
+              image: "assets/lucid-thumbnail.webp",
+              title: "Lucid Motors",
+              subtitle: "Account & Onboarding (0→1)",
+              tags: ["Design System", "Component Library", "Documentation"],
+              link: "https://www.chrissanders.me/lucid.html"
+            },
+            {
+              image: "assets/sephora-thumbnail.webp",
+              title: "Sephora",
+              subtitle: "Makeup Artist Guide",
+              tags: ["Web Application", "User Experience", "Visual Design"],
+              link: "https://www.chrissanders.me/sephora.html"
+            },
+            {
+              image: "assets/samsung-thumbnail.webp",
+              title: "Samsung",
+              subtitle: "Frame TV",
+              tags: ["Product Design", "3D Visualization", "E-commerce"],
+              link: "https://www.chrissanders.me/samsung.html"
+            },
+            {
+              image: "assets/ori-thumbnail.webp",
+              title: "Ori Living",
+              subtitle: "Robotic Furniture System",
+              tags: ["Brand Design", "Web Design", "Content Strategy"],
+              link: "https://www.chrissanders.me/ori.html"
+            },
+            {
+              image: "assets/BHHS-thumbnail.webp",
+              title: "Berkshire Hathaway",
+              subtitle: "A scalable CMS and design system built for real estate franchisees",
+              tags: ["Mobile Design", "iOS/Android", "User Research"],
+              link: "https://www.chrissanders.me/bhhs.html"
+            },
+          ];
+
+          const smallProjects = [
+            {
+              image: "assets/dolby/dolby-thumbnail.webp",
+              title: "DOLBY",
+              description: "DESCRIPTION HERE",
+              link: "https://www.chrissanders.me/dolby.html"
+            },
+            {
+              image: "assets/tesla/tesla-thumbnail.webp",
+              title: "TESLA ENERGY",
+              description: "DESCRIPTION HERE",
+              link: "https://www.chrissanders.me/tesla.html"
+            },
+            {
+              image: "assets/paceline/paceline-thumbnail.webp",
+              title: "PACELINE",
+              description: "DESCRIPTION HERE",
+              link: "https://www.chrissanders.me/paceline.html"
+            },
+            {
+              image: "assets/TCLV/TCLV-thumbnail.png",
+              title: "THE COSMOPOLITAN OF LAS VEGAS",
+              description: "DESCRIPTION HERE",
+              link: "https://www.chrissanders.me/cosmopolitan.html"
+            },
+            {
+              image: "assets/gemini/gemini-thumbnail.webp",
+              title: "GEMINI DATA",
+              description: "DESCRIPTION HERE",
+              link: "https://www.chrissanders.me/gemini.html"
+            },
+            {
+              image: "assets/valocity/valocity-thumbnail.webp",
+              title: "VALOCITY DIGITAL",
+              description: "DESCRIPTION HERE",
+              link: "https://www.chrissanders.me/project.html"
+            }
+          ];
+
+          const navItems = [
+            { name: 'work', link: null },
+            { name: 'about', link: 'https://www.chrissanders.me/resume.html' }
+          ];
+
+          const [activeNav, setActiveNav] = useState("work");
+          const [hoveredNav, setHoveredNav] = useState(null);
+          const [isNavSticky, setIsNavSticky] = useState(false);
+          const navRef = useRef(null);
+
+          useEffect(() => {
+            const observer = new IntersectionObserver(
+              ([entry]) => {
+                setIsNavSticky(!entry.isIntersecting);
+              },
+              { threshold: 1 }
+            );
+
+            if (navRef.current) {
+              observer.observe(navRef.current);
+            }
+
+            return () => {
+              if (navRef.current) {
+                observer.unobserve(navRef.current);
+              }
+            };
+          }, []);
+
+          const handleNavClick = (navItem) => {
+            if (navItem.link) {
+              window.location.href = navItem.link;
+            } else {
+              setActiveNav(navItem.name);
+            }
+          };
+
+          return h('div', { className: "bg-white min-h-screen relative" },
+            // Hero Section
+            h(motion.section, {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.8, ease: "easeOut" },
+              className: "px-4 pt-[100px] pb-0"
+            },
+              h(motion.h1, {
+                initial: { opacity: 0, y: 30 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.8, ease: "easeOut" },
+                className: "hero-title text-center uppercase leading-none tracking-tight text-[64px] sm:text-[80px] md:text-[120px] lg:text-[180px] xl:text-[240px] 2xl:text-[320px]"
+              }, "Chris Sanders"),
+              h(motion.p, {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                transition: { duration: 0.8, delay: 0.8 },
+                className: "text-center mt-4 md:mt-6 text-2xl tracking-tight"
+              }, "Design lead focusing on digital products, UX, and brand innovation")
+            ),
+
+            // Sticky Navigation
+            h('div', {
+              ref: navRef,
+              className: "sticky top-0 z-40 flex justify-center py-4 md:py-8 mt-5"
+            },
+              h('nav', {
+                className: `px-2 md:px-4 py-2 md:py-4 rounded-xl md:rounded-2xl bg-[#eae9e9e6] backdrop-blur-lg transition-shadow duration-300 ${isNavSticky ? 'shadow-2xl' : ''}`
+              },
+                h('div', { className: "flex items-center gap-0.5 md:gap-1" },
+                  navItems.map(navItem =>
+                    h('button', {
+                      key: navItem.name,
+                      onClick: () => handleNavClick(navItem),
+                      onMouseEnter: () => setHoveredNav(navItem.name),
+                      onMouseLeave: () => setHoveredNav(null),
+                      className: "px-4 md:px-8 py-2 md:py-3 rounded-xl uppercase text-xs md:text-base transition-colors relative"
+                    },
+                      (hoveredNav === navItem.name || activeNav === navItem.name) && h(motion.div, {
+                        layoutId: "navBackground",
+                        className: "absolute inset-0 bg-black rounded-xl",
+                        transition: { type: "spring", stiffness: 400, damping: 30 }
+                      }),
+                      h('span', {
+                        className: `relative z-10 ${activeNav === navItem.name || hoveredNav === navItem.name ? "text-white" : "text-black"} transition-colors`
+                      }, navItem.name.charAt(0).toUpperCase() + navItem.name.slice(1))
+                    )
+                  )
+                )
+              )
+            ),
+
+            // Main Portfolio Gallery
+            h(motion.section, {
+              initial: { opacity: 0, y: 30 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 1.6 },
+              className: "max-w-[1900px] mx-auto px-4 md:px-8 py-12 md:py-24 lg:py-[100px] space-y-12 md:space-y-24"
+            },
+              projects.map((project, index) =>
+                h(motion.div, {
+                  key: index,
+                  initial: { opacity: 0, y: 50 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true, margin: "-100px" },
+                  transition: { duration: 0.6, delay: index * 0.1 },
+                  className: "w-full space-y-4 md:space-y-6 pb-12 md:pb-24 lg:pb-[160px]"
+                },
+                  h(motion.div, {
+                    initial: { opacity: 0, x: -20 },
+                    whileInView: { opacity: 1, x: 0 },
+                    viewport: { once: true },
+                    transition: { duration: 0.5, delay: 0.2 },
+                    className: "flex flex-col md:flex-row md:items-end md:justify-between gap-4"
+                  },
+                    h('div', {},
+                      h('h3', {
+                        className: "font-bold text-2xl md:text-3xl lg:text-4xl text-black mb-1"
+                      }, project.title),
+                      h('p', {
+                        className: "text-sm md:text-base text-black"
+                      }, project.subtitle)
+                    ),
+                    h('div', { className: "flex flex-wrap gap-2 md:justify-end" },
+                      project.tags.map((tag, tagIndex) =>
+                        h(motion.span, {
+                          key: tagIndex,
+                          initial: { opacity: 0, scale: 0.8 },
+                          whileInView: { opacity: 1, scale: 1 },
+                          viewport: { once: true },
+                          transition: { duration: 0.3, delay: 0.3 + tagIndex * 0.1 },
+                          className: "bg-gray-100 px-3 py-1 rounded-full text-xs md:text-sm text-black"
+                        }, tag)
+                      )
+                    )
+                  ),
+                  h(motion.div, {
+                    initial: { scale: 0.95 },
+                    whileInView: { scale: 1 },
+                    whileHover: { scale: 1.02 },
+                    viewport: { amount: 0.3 },
+                    transition: { duration: 0.5, ease: "easeOut" },
+                    className: "overflow-hidden rounded-lg"
+                  },
+                    h('a', {
+                      href: project.link,
+                      className: "block cursor-pointer"
+                    },
+                      h('img', {
+                        src: project.image,
+                        alt: project.title + " Project",
+                        className: "w-full h-auto object-cover rounded-lg"
+                      })
+                    )
+                  )
+                )
+              )
+            ),
+
+            // Small Projects Grid - SQUARE THUMBNAILS (1:1 ratio)
+            h(motion.section, {
+              initial: { opacity: 0, y: 30 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { duration: 0.6 },
+              className: "bg-white px-4 md:px-8 py-12 md:py-24 lg:py-[100px]"
+            },
+              h('div', { className: "max-w-[1900px] mx-auto" },
+                // Top Row - 2 items on the right
+                h('div', { className: "grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-10 md:mb-16" },
+                  // Empty spaces on the left (hidden on mobile)
+                  h('div', { className: "hidden md:block" }),
+                  h('div', { className: "hidden md:block" }),
+                  
+                  // DOLBY
+                  h(motion.div, {
+                    initial: { opacity: 0, y: 20 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true },
+                    transition: { duration: 0.5, delay: 0.1 },
+                    className: "flex flex-col gap-2"
+                  },
+                    h('a', {
+                      href: smallProjects[0].link,
+                      className: "block"
+                    },
+                      h(motion.div, {
+                        whileHover: { scale: 1.02 },
+                        transition: { duration: 0.5, ease: "easeOut" },
+                        className: "aspect-square rounded-lg overflow-hidden bg-gray-200 cursor-pointer"
+                      },
+                        h('img', {
+                          src: smallProjects[0].image,
+                          alt: smallProjects[0].title,
+                          className: "w-full h-full object-cover"
+                        })
+                      )
+                    ),
+                    h('div', {},
+                      h('h3', {
+                        className: "text-xs md:text-sm uppercase tracking-wide mb-0.5"
+                      }, smallProjects[0].title),
+                      h('p', {
+                        className: "text-xs md:text-sm text-gray-600"
+                      }, smallProjects[0].description)
+                    )
+                  ),
+
+                  // TESLA ENERGY
+                  h(motion.div, {
+                    initial: { opacity: 0, y: 20 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true },
+                    transition: { duration: 0.5, delay: 0.2 },
+                    className: "flex flex-col gap-2"
+                  },
+                    h('a', {
+                      href: smallProjects[1].link,
+                      className: "block"
+                    },
+                      h(motion.div, {
+                        whileHover: { scale: 1.02 },
+                        transition: { duration: 0.5, ease: "easeOut" },
+                        className: "aspect-square rounded-lg overflow-hidden bg-gray-200 cursor-pointer"
+                      },
+                        h('img', {
+                          src: smallProjects[1].image,
+                          alt: smallProjects[1].title,
+                          className: "w-full h-full object-cover"
+                        })
+                      )
+                    ),
+                    h('div', {},
+                      h('h3', {
+                        className: "text-xs md:text-sm uppercase tracking-wide mb-0.5"
+                      }, smallProjects[1].title),
+                      h('p', {
+                        className: "text-xs md:text-sm text-gray-600"
+                      }, smallProjects[1].description)
+                    )
+                  )
+                ),
+
+                // Bottom Row - 4 items
+                h('div', { className: "grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3" },
+                  // Remaining 4 projects
+                  [2, 3, 4, 5].map((idx, arrayIdx) =>
+                    h(motion.div, {
+                      key: idx,
+                      initial: { opacity: 0, y: 20 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: true },
+                      transition: { duration: 0.5, delay: 0.1 * (arrayIdx + 3) },
+                      className: "flex flex-col gap-2"
+                    },
+                      h('a', {
+                        href: smallProjects[idx].link,
+                        className: "block"
+                      },
+                        h(motion.div, {
+                          whileHover: { scale: 1.02 },
+                          transition: { duration: 0.5, ease: "easeOut" },
+                          className: "aspect-square rounded-lg overflow-hidden bg-gray-200 cursor-pointer"
+                        },
+                          h('img', {
+                            src: smallProjects[idx].image,
+                            alt: smallProjects[idx].title,
+                            className: "w-full h-full object-cover"
+                          })
+                        )
+                      ),
+                      h('div', {},
+                        h('h3', {
+                          className: "text-xs md:text-sm uppercase tracking-wide mb-0.5"
+                        }, smallProjects[idx].title),
+                        h('p', {
+                          className: "text-xs md:text-sm text-gray-600"
+                        }, smallProjects[idx].description)
+                      )
+                    )
+                  )
+                )
+              )
+            ),
+
+            // Contact Section
+            h(motion.section, {
+              initial: { opacity: 0, y: 30 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true },
+              transition: { duration: 0.6 },
+              className: "bg-black text-white px-4 md:px-8 py-12 md:py-24 lg:py-[100px] pb-24 md:pb-32"
+            },
+              h('div', { className: "max-w-[1900px] mx-auto" },
+                h('h2', {
+                  className: "font-bold text-3xl md:text-5xl lg:text-6xl xl:text-8xl mb-8 md:mb-12 tracking-tight max-w-5xl"
+                }, "Interested in leading complex design work together?"),
+                h(motion.div, {
+                  initial: { opacity: 0 },
+                  whileInView: { opacity: 1 },
+                  viewport: { once: true },
+                  transition: { duration: 0.6, delay: 0.2 },
+                  className: "flex flex-col sm:flex-row gap-4 sm:gap-8 text-lg md:text-xl"
+                },
+                  h('a', {
+                    href: "mailto:contact@chrissanders.com",
+                    className: "hover:opacity-70 transition-opacity"
+                  }, "Email"),
+                  h('a', {
+                    href: "https://linkedin.com",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    className: "hover:opacity-70 transition-opacity"
+                  }, "LinkedIn")
+                )
+              )
+            )
+          );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(h(PortfolioPage));
+    </script>
+</body>
+</html>
